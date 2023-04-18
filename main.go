@@ -1,10 +1,14 @@
 package main
 
 import (
-	"regexp"
-	"strconv"
+	"fmt"
+	"os"
 	"strings"
 )
+
+func compare(a, b string) int {
+	return strings.Compare(a, b)
+}
 
 func toUpper(str string) string {
 	return strings.ToUpper(str)
@@ -14,24 +18,42 @@ func toLower(str string) string {
 	return strings.ToLower(str)
 }
 
-func toTitle(str string) string {
+func capitalise(str string) string {
 	return strings.Title(str)
 }
 
-func replaceHex(input string) string {
-	// Regular expression to match a hexadecimal number
-	hexRegex := regexp.MustCompile(`0x[0-9a-fA-F]+`)
+func main() {
+	data, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	// fmt.Println(string(data))
+	input := string(data)
+	//fmt.Println(input)
+	result := strings.Fields(input)
+	fmt.Println(result)
 
-	// Replace each hexadecimal number with its decimal equivalent
-	output := hexRegex.ReplaceAllStringFunc(input, func(hexMatch string) string {
-		hexValue, err := strconv.ParseInt(hexMatch[2:], 16, 64)
-		if err != nil {
-			// Ignore invalid hexadecimal numbers
-			return hexMatch
+	for i, v := range result {
+
+		if v == "(up)" {
+			result[i-1] = toUpper(result[i-1])
 		}
-		decimalValue := strconv.FormatInt(hexValue, 10)
-		return decimalValue
-	})
 
-	return output
+		if compare(v, "(cap)") == 0 {
+			result[i-1] = capitalise(result[i-1])
+
+		}
+
+		if compare(v, "(lower)") == 0 {
+			result[i-1] = toLower(result[i-1])
+		}
+q
+	}
+
+	// fmt.Println(toUpper("gopher"))
+	// fmt.Println(toLower("01FOUNDERS"))
+	// fmt.Println(toTitle("hey how are you?"))
+	// input := "1E (hex) files were added"
+	// output := replaceHex(input)
+	// fmt.Println(output) // Output: 30 files were added
 }
