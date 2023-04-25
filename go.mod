@@ -1,3 +1,3 @@
-module example.com/m
+module goreloaded
 
 go 1.20
