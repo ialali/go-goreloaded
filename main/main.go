@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 	"goreloaded"
-	"io/ioutil"
+	"os"
 )
 
 func main() {
 	// Read input file
-	input, err := ioutil.ReadFile("sample.txt")
+	input, err := os.ReadFile("sample.txt")
 	if err != nil {
 		fmt.Println("Error reading input file:", err)
 		return
@@ -25,7 +25,7 @@ func main() {
 	text = goreloaded.ReplaceQuotes(text)
 
 	// Write output file
-	err = ioutil.WriteFile("result.txt", []byte(text), 0644)
+	err = os.WriteFile("result.txt", []byte(text), 0644)
 	if err != nil {
 		fmt.Println("Error writing output file:", err)
 		return
