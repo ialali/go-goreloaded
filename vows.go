@@ -2,7 +2,7 @@ package goreloaded
 
 import "strings"
 
-func FormatVows(text string) string {
+func FormatVowels(text string) string {
 	words := strings.Fields(text)
 	for i := 0; i < len(words)-1; i++ {
 		if strings.ToLower(words[i]) == "a" {
